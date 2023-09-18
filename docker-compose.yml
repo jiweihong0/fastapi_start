@@ -12,4 +12,15 @@ services:
         - MYSQL_DATABASE=restapi
         - MYSQL_USER=user
         - MYSQL_PASSWORD=password
+  fastapi:
+      build: .
+      ports:
+        - 8500:8500
+      depends_on:
+        - mysql
+      environment:
+        - DB_HOST=mysql
+        - DB_USER=user
+        - DB_PASSWORD=password
+        - DB_NAME=restapi
       
