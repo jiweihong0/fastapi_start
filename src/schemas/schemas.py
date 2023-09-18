@@ -16,7 +16,7 @@ class UserAuthenticate(UserInfoBase):
 
 
 class UserInfo(UserInfoBase):
-    id: int
+    Uid: int
 
     class Config:
         orm_mode = True
