@@ -4,6 +4,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 import asyncio
 import time
 import pandas as pd
+import os
 
 
 async def my_async_function(name):
@@ -11,13 +12,14 @@ async def my_async_function(name):
 
   # # Save the dataframe to a pickle file
   # df.to_pickle('df.pkl')
+ 
 
   # Load the dataframe from the pickle file
-  df = pd.read_pickle('df.pkl')
+  df = pd.read_pickle('/app/src/cal/df.pkl')
 
 
   # read the data from file 'b.xslx'
-  df_unitext = pd.read_excel('b.xlsx', sheet_name='Sheet1')
+  df_unitext = pd.read_excel('/app/src/cal/b.xlsx', sheet_name='Sheet1')
 
   # df ['Unnamed: 0']透過 df_unitext ['Unnamed: 0']來做塞選
   df_unitext = df[df['Unnamed: 0'].isin(df_unitext['Unnamed: 0'])]
