@@ -162,3 +162,5 @@ cython_debug/
 # Data from mysql docker 
 data
 src/cal/df.pkl
+src/cal/cal100.py
+
