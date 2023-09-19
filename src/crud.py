@@ -80,16 +80,19 @@ def get_questionnaire_by_username(db: Session, username: str):
     for i in db_data:
         db_questionnaire = db.query(models.Questionnaire).filter(models.Questionnaire.Qnid == i.Qnid).first()
         db_question = db.query(models.Question).filter(models.Question.Qnid == db_questionnaire.Qnid).all()
-        db_option = db.query(models.Options).filter(models.Options.Qid == db_question[0].Qid).all()
+       
+       
         # Question and option  to json
         question = []
         for j in db_question:
             option = []
+            db_option = db.query(models.Options).filter(models.Options.Qid == j.Qid).all()
             for k in db_option:
+                print(j.Qid,k.Qid)
                 if j.Qid == k.Qid:
                     option.append(k)
             question.append({'Qid':j.Qid,'Question':j.question,'Option':option})
-        ans.append({'Qnid':db_questionnaire.Qnid,'title':db_questionnaire.title,'content':db_questionnaire.content,'question':question})
+        ans.append({'Qnid':db_questionnaire.Qnid,'title':db_questionnaire.title,'content':db_questionnaire.content,'Question':question})
     return ans
 
 #record_questionnaire
