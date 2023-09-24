@@ -5,6 +5,10 @@ import asyncio
 import time
 import pandas as pd
 import os
+import dotenv
+from dotenv import load_dotenv
+load_dotenv()
+
 
 
 async def my_async_function(name):
@@ -15,11 +19,13 @@ async def my_async_function(name):
  
 
   # Load the dataframe from the pickle file
-  df = pd.read_pickle('/app/src/cal/df.pkl')
+  path = os.getcwd()
+
+  df = pd.read_pickle(path+'\cal\df.pkl')
 
 
   # read the data from file 'b.xslx'
-  df_unitext = pd.read_excel('/app/src/cal/b.xlsx', sheet_name='Sheet1')
+  df_unitext = pd.read_excel(path+'\cal\\b.xlsx', sheet_name='Sheet1')
 
   # df ['Unnamed: 0']透過 df_unitext ['Unnamed: 0']來做塞選
   df_unitext = df[df['Unnamed: 0'].isin(df_unitext['Unnamed: 0'])]
