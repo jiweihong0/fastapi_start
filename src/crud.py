@@ -97,7 +97,7 @@ def get_questionnaire_by_username(db: Session, username: str):
 
 #record_questionnaire
 def record_questionnaire(db: Session, record: schemas.Record):
-    db_record = models.Record(Qnid=record.Qnid, Qid=record.Qid, Uid=record.Uid, Option=record.Option)
+    db_record = models.Record( Qid=record.Qid, Uid=record.Uid, Oid=record.Oid)
     db.add(db_record)
     db.commit()
     db.refresh(db_record)

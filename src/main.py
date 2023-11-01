@@ -27,6 +27,7 @@ origins = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:8081",
+    "http://140.133.74.248:5173"
 ]
 
 app.add_middleware(
@@ -145,10 +146,10 @@ async def get_questionnaire_by_username(current_user: UserInfo = Depends(get_cur
         return crud.get_questionnaire_by_username(db=db, username=current_user.username)
 
 # record questionnaire
-@app.post("/record/questionnaire", response_model=schemas.Questionnaire)
-async def record_questionnaire(questionnaire: schemas.QuestionnaireBase, current_user: UserInfo = Depends(get_current_user)
+@app.post("/record/questionnaire", response_model=schemas.Record)
+async def record_questionnaire(record: schemas.Record, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.record_questionnaire(db=db, questionnaire=questionnaire)
+        return crud.record_questionnaire(db=db, record=record)
 
 
 
