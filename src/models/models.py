@@ -72,3 +72,28 @@ class Trailer(Base):
     Q4 = Column(String(500))
     Q5 = Column(String(500))
     Q6 = Column(String(500))
+
+class News(Base):
+    __tablename__ = 'news'
+
+    id = Column(Integer, primary_key=True, index = True)
+    Uid = Column(Integer, ForeignKey('user_info.Uid'))
+    Q1 = Column(String(500))
+    Q2 = Column(String(500))
+    Q3 = Column(String(500))
+    Q4 = Column(String(500))
+
+class WordCloud(Base):
+    __tablename__ = 'wordcloud'
+    id = Column(Integer, primary_key=True, index = True)
+    Uid = Column(Integer, ForeignKey('user_info.Uid'))
+    Q1 = Column(String(500))
+
+class Theme(Base):
+    __tablename__ = 'theme'
+    id = Column(Integer, primary_key=True, index = True)
+    Uid = Column(Integer, ForeignKey('user_info.Uid'))
+    Q1 = Column(String(500))
+    Q2 = Column(String(500))
+    Q3 = Column(String(500))
+    Q4 = Column(String(500))

@@ -93,3 +93,24 @@ def create_new_trailer(db: Session, trailer: schemas.Tralier):
     db.commit()
     db.refresh(db_trailer)
     return db_trailer
+
+def create_new_news(db: Session, news: schemas.News):
+    db_news = models.News(Uid = news.Uid, Q1 = news.Q1, Q2 = news.Q2, Q3 = news.Q3, Q4 = news.Q4)
+    db.add(db_news)
+    db.commit()
+    db.refresh(db_news)
+    return db_news
+
+def create_new_wordcloud(db: Session, wordcloud: schemas.WordCloud):
+    db_wordcloud = models.WordCloud(Uid = wordcloud.Uid, Q1 = wordcloud.Q1)
+    db.add(db_wordcloud)
+    db.commit()
+    db.refresh(db_wordcloud)
+    return db_wordcloud
+
+def create_new_theme(db: Session, theme: schemas.Theme):
+    db_theme = models.Theme(Uid = theme.Uid, Q1 = theme.Q1, Q2 = theme.Q2, Q3 = theme.Q3, Q4 = theme.Q4)
+    db.add(db_theme)
+    db.commit()
+    db.refresh(db_theme)
+    return db_theme

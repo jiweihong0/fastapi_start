@@ -131,10 +131,26 @@ async def record_questionnaire(record: schemas.Record, current_user: UserInfo = 
                             , db: Session = Depends(get_db)):
         return crud.record_questionnaire(db=db, record=record)
 
-@app.post("/new/Trailer", response_model=schemas.Tralier)
+@app.post("/new/trailer", response_model=schemas.Tralier)
 async def create_new_trailer(trailer: schemas.Tralier, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
         return crud.create_new_trailer(db=db, trailer=trailer)
+
+@app.post("/new/news", response_model=schemas.News)
+async def create_new_news(news: schemas.News, current_user: UserInfo = Depends(get_current_user)
+                            , db: Session = Depends(get_db)):
+        return crud.create_new_news(db=db, news=news)
+
+@app.post("/new/wordcloud", response_model=schemas.WordCloud)
+async def create_new_wordcloud(wordcloud: schemas.WordCloud, current_user: UserInfo = Depends(get_current_user)
+                            , db: Session = Depends(get_db)):
+        return crud.create_new_wordcloud(db=db, wordcloud=wordcloud)
+
+@app.post("/new/theme", response_model=schemas.Theme)
+async def create_new_theme(theme: schemas.Theme, current_user: UserInfo = Depends(get_current_user)
+                            , db: Session = Depends(get_db)):
+        return crud.create_new_theme(db=db, theme=theme)
+
 
 
 

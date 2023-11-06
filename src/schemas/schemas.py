@@ -105,3 +105,27 @@ class Tralier(BaseModel):
     Q6: str
     class Config:
         orm_mode = True
+
+class News(BaseModel):
+    Uid: int
+    Q1: str
+    Q2: str
+    Q3: str
+    Q4: str
+    class Config:
+        orm_mode = True
+
+class WordCloud(BaseModel):
+    Uid: int
+    Q1: str
+    class Config:
+        orm_mode = True
+
+class Theme(BaseModel):
+    Uid: int
+    Q1: str
+    Q2: str
+    Q3: str
+    Q4: str
+    class Config:
+        orm_mode = True
