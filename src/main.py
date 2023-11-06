@@ -27,6 +27,8 @@ origins = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:8081",
+    "http://140.133.74.248:5173"
+    
 ]
 
 app.add_middleware(
@@ -81,7 +83,8 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 @app.post("/authenticate", response_model=Token)
 def authenticate_user(user: schemas.UserAuthenticate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_username(db, username=user.username)
-   
+    print(db_user.type)
+    
     if db_user is None:
         raise HTTPException(status_code=400, detail="Username not existed")
     else:
@@ -92,7 +95,7 @@ def authenticate_user(user: schemas.UserAuthenticate, db: Session = Depends(get_
             access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
             access_token = create_access_token(
                 data={"sub": user.username}, expires_delta=access_token_expires)
-            return {"access_token": access_token, "token_type": "Bearer"}
+            return {"access_token": access_token, "token_type": "Bearer", "type": db_user.type, "auth": db_user.auth}
 
 
 @app.post("/blog", response_model=schemas.Blog)

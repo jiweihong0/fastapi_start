@@ -11,6 +11,11 @@ class UserInfo(Base):
     department = Column(String(50))
     username = Column(String(50))
     password = Column(String(300))
+    type = Column(String(50))
+
+
+    # default value for auth
+    auth = Column(String(50), default="訪客")
     # fullname = Column(String(50), unique=True)
 
 class Blog(Base):

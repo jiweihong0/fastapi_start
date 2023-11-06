@@ -8,6 +8,7 @@ class UserCreate(UserInfoBase):
     email: str
     department: str
     password: str
+    type: str
 
 
 
@@ -25,6 +26,8 @@ class UserInfo(UserInfoBase):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    type: str
+    auth: str
 
 
 class TokenData(BaseModel):
