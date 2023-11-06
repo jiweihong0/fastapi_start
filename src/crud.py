@@ -29,22 +29,6 @@ def change_password(db: Session, user: schemas.UserAuthenticate):
     db.refresh(db_user_info)
     return db_user_info
 
-def create_new_blog(db: Session, blog: schemas.BlogBase):
-    db_blog = models.Blog(title=blog.title, content=blog.content)
-    db.add(db_blog)
-    db.commit()
-    db.refresh(db_blog)
-    return db_blog
-
-def get_all_blogs(db: Session):
-    return db.query(models.Blog).all()
-
-def get_blog_by_id(db: Session, blog_id: int):
-    return db.query(models.Blog).filter(models.Blog.id == blog_id).first()
-
-def delete_blog_by_id(db:Session, blog: schemas.Blog):
-    db.delete(blog)
-    db.commit()    
 
 async def get_wordcloud(db: Session,word):
     result = await my_async_function(word)
@@ -103,7 +87,9 @@ def record_questionnaire(db: Session, record: schemas.Record):
     db.refresh(db_record)
     return db_record
 
-
-
-
-
+def create_new_trailer(db: Session, trailer: schemas.Tralier):
+    db_trailer = models.Trailer(Uid = trailer.Uid, Q1 = trailer.Q1, Q2 = trailer.Q2, Q3 = trailer.Q3, Q4 = trailer.Q4, Q5 = trailer.Q5, Q6 = trailer.Q6)
+    db.add(db_trailer)
+    db.commit()
+    db.refresh(db_trailer)
+    return db_trailer

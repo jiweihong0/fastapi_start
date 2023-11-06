@@ -18,14 +18,6 @@ class UserInfo(Base):
     auth = Column(String(50), default="訪客")
     # fullname = Column(String(50), unique=True)
 
-class Blog(Base):
-    __tablename__ = 'blog'
-
-    id = Column(Integer, primary_key=True, index = True)
-    title = Column(String(100))
-    content = Column(String(200))
- 
-
 
 class Question(Base):
     __tablename__ = 'question'
@@ -69,3 +61,14 @@ class QuestionnaireToUser(Base):
     Qnid = Column(Integer, ForeignKey('questionnaire.Qnid'))
     Uid = Column(Integer, ForeignKey('user_info.Uid'))
 
+class Trailer(Base):
+    __tablename__ = 'trailer'
+
+    id = Column(Integer, primary_key=True, index = True)
+    Uid = Column(Integer, ForeignKey('user_info.Uid'))
+    Q1 = Column(String(500))
+    Q2 = Column(String(500))
+    Q3 = Column(String(500))
+    Q4 = Column(String(500))
+    Q5 = Column(String(500))
+    Q6 = Column(String(500))

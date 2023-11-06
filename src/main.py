@@ -131,6 +131,10 @@ async def record_questionnaire(record: schemas.Record, current_user: UserInfo = 
                             , db: Session = Depends(get_db)):
         return crud.record_questionnaire(db=db, record=record)
 
+@app.post("/new/Trailer", response_model=schemas.Tralier)
+async def create_new_trailer(trailer: schemas.Tralier, current_user: UserInfo = Depends(get_current_user)
+                            , db: Session = Depends(get_db)):
+        return crud.create_new_trailer(db=db, trailer=trailer)
 
 
 

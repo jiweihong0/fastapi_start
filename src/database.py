@@ -9,10 +9,6 @@ load_dotenv()
 SQLALCHEMY_DATABASE_URL = os.getenv("DB_URL")
 
 
-
-
-# SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:password@mysql:3306/restapi"
-
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 
