@@ -98,29 +98,7 @@ def authenticate_user(user: schemas.UserAuthenticate, db: Session = Depends(get_
             return {"access_token": access_token, "token_type": "Bearer", "type": db_user.type, "auth": db_user.auth}
 
 
-@app.post("/blog", response_model=schemas.Blog)
-async def create_new_blog(blog: schemas.BlogBase, current_user: UserInfo = Depends(get_current_user)
-                          , db: Session = Depends(get_db)):
-    return crud.create_new_blog(db=db, blog=blog)
 
-
-@app.get("/blog")
-async def get_all_blogs(current_user: UserInfo = Depends(get_current_user)
-                        , db: Session = Depends(get_db)):
-    return crud.get_all_blogs(db=db)
-
-
-@app.get("/blog/{blog_id}")
-async def get_blog_by_id(blog_id, current_user: UserInfo = Depends(get_current_user)
-                         , db: Session = Depends(get_db)):
-    return crud.get_blog_by_id(db=db, blog_id=blog_id)
-
-@app.delete("/blog/{blog_id}",status_code=204)
-async def delete_blog_by_id(blog_id,current_user: UserInfo = Depends(get_current_user)
-                         , db: Session = Depends(get_db)):
-    blog_delete = crud.get_blog_by_id(db=db,blog_id=blog_id)
-    if blog_delete:
-        crud.delete_blog_by_id(db=db,blog=blog_delete)
 
 @app.get("/wordcloud/{word}")
 async def get_wordcloud(word,current_user: UserInfo = Depends(get_current_user)
