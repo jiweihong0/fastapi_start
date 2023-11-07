@@ -34,7 +34,7 @@ CREATE TABLE `news` (
   `Q2` varchar(500) DEFAULT NULL,
   `Q3` varchar(500) DEFAULT NULL,
   `Q4` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `news`
@@ -52,7 +52,7 @@ INSERT INTO `news` (`id`, `Uid`, `Q1`, `Q2`, `Q3`, `Q4`) VALUES
 CREATE TABLE `options` (
   `Oid` int NOT NULL,
   `option` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `options`
@@ -128,7 +128,7 @@ CREATE TABLE `question` (
   `Qid` int NOT NULL,
   `question` varchar(100) DEFAULT NULL,
   `Qnid` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `question`
@@ -166,7 +166,7 @@ CREATE TABLE `questionnaire` (
   `Qnid` int NOT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `questionnaire`
@@ -186,7 +186,7 @@ CREATE TABLE `questionnaire_to_user` (
   `id` int NOT NULL,
   `Qnid` int DEFAULT NULL,
   `Uid` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `questionnaire_to_user`
@@ -205,7 +205,7 @@ CREATE TABLE `questiontooption` (
   `id` int NOT NULL,
   `Qid` int DEFAULT NULL,
   `Oid` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `questiontooption`
@@ -292,7 +292,7 @@ CREATE TABLE `record` (
   `Uid` int DEFAULT NULL,
   `Qid` int DEFAULT NULL,
   `Oid` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -307,7 +307,7 @@ CREATE TABLE `theme` (
   `Q2` varchar(500) DEFAULT NULL,
   `Q3` varchar(500) DEFAULT NULL,
   `Q4` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `theme`
@@ -331,7 +331,7 @@ CREATE TABLE `trailer` (
   `Q4` varchar(500) DEFAULT NULL,
   `Q5` varchar(500) DEFAULT NULL,
   `Q6` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `trailer`
@@ -356,7 +356,7 @@ CREATE TABLE `user_info` (
   `password` varchar(300) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
   `auth` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `user_info`
@@ -375,7 +375,7 @@ CREATE TABLE `wordcloud` (
   `id` int NOT NULL,
   `Uid` int DEFAULT NULL,
   `Q1` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf32_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `wordcloud`
