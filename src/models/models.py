@@ -32,7 +32,6 @@ class Options(Base):
 
     Oid = Column(Integer, primary_key=True, index = True)
     option = Column(String(100))
-    Qid = Column(Integer, ForeignKey('question.Qid'))
     # fullname = Column(String(50), unique=True)
 
 class Record(Base):
@@ -97,3 +96,9 @@ class Theme(Base):
     Q2 = Column(String(500))
     Q3 = Column(String(500))
     Q4 = Column(String(500))
+
+class Questiontooption(Base):
+    __tablename__ = 'questiontooption'
+    id = Column(Integer, primary_key=True, index = True)
+    Qid = Column(Integer, ForeignKey('question.Qid'))
+    Oid = Column(Integer, ForeignKey('options.Oid'))

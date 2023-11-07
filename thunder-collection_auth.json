@@ -1,0 +1,47 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "auth",
+    "dateExported": "2023-11-06T10:26:10.657Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "e07e62c6-af94-4b5e-86b8-17a696a8bff2",
+            "colId": "ee84ae48-5891-468f-b1c0-21e2569c8624",
+            "containerId": "",
+            "name": "http://localhost:8500/authenticate",
+            "url": "http://localhost:8500/authenticate",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-11-06T07:56:19.193Z",
+            "modified": "2023-11-06T07:59:10.424Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"test001\",\n  \"password\": \"test001\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "74253d4f-3a9a-4fd1-b8ef-e03ded2f8284",
+            "colId": "ee84ae48-5891-468f-b1c0-21e2569c8624",
+            "containerId": "",
+            "name": "http://localhost:8500/user",
+            "url": "http://localhost:8500/user",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-11-06T07:58:51.631Z",
+            "modified": "2023-11-06T07:58:51.631Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"username\": \"test001\",\r\n  \"age\": 12,\r\n  \"email\": \"test001@gmail.com\",\r\n  \"department\": \"test001\",\r\n  \"password\": \"test001\",\r\n  \"type\": \"詞雲學習\"\r\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
