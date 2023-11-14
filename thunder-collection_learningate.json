@@ -1,0 +1,37 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "learningate",
+    "dateExported": "2023-11-14T03:37:39.493Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "424572aa-cda0-4afb-9b73-d93221f0300a",
+            "colId": "fb4d21c5-bff6-4ce1-a673-f1ea240501a2",
+            "containerId": "",
+            "name": "http://localhost:8500/content",
+            "url": "http://localhost:8500/cal100_methods2",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-14T03:03:04.139Z",
+            "modified": "2023-11-14T03:13:04.209Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d3ea46b3-a9e0-417d-ba27-1e4dabda692c",
+            "colId": "fb4d21c5-bff6-4ce1-a673-f1ea240501a2",
+            "containerId": "",
+            "name": "http://localhost:8500/cal100_methods2/自然",
+            "url": "http://localhost:8500/cal100_methods2/自然",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-11-14T03:33:00.619Z",
+            "modified": "2023-11-14T03:33:00.619Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
