@@ -21,11 +21,11 @@ async def my_async_function(name):
   # Load the dataframe from the pickle file
   path = os.getcwd()
 
-  df = pd.read_pickle(path+'\cal\df.pkl')
+  df = pd.read_pickle(path+'/cal/df.pkl')
 
 
   # read the data from file 'b.xslx'
-  df_unitext = pd.read_excel(path+'\cal\\b.xlsx', sheet_name='Sheet1')
+  df_unitext = pd.read_excel(path+'/cal/b.xlsx', sheet_name='Sheet1')
 
   # df ['Unnamed: 0']透過 df_unitext ['Unnamed: 0']來做塞選
   df_unitext = df[df['Unnamed: 0'].isin(df_unitext['Unnamed: 0'])]

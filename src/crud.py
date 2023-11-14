@@ -30,11 +30,11 @@ def change_password(db: Session, user: schemas.UserAuthenticate):
     return db_user_info
 
 
-async def get_wordcloud(db: Session,word):
+async def get_wordcloud(word):
     result = await my_async_function(word)
     result.reset_index(inplace=True)
     #換成json
-    print(result)
+
     result_rename = result.rename(columns={'label':'text','distance':'weight'})
     result_rename = result_rename.drop(['index'],axis=1)
 

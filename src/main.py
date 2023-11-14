@@ -14,6 +14,8 @@ from schemas.schemas import UserInfo, TokenData, UserCreate, Token, UserAuthenti
 from fastapi.middleware.cors import CORSMiddleware
 from app_utils import create_access_token
 from datetime import timedelta
+from fastapi.responses import JSONResponse
+import json
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -150,6 +152,20 @@ async def create_new_wordcloud(wordcloud: schemas.WordCloud, current_user: UserI
 async def create_new_theme(theme: schemas.Theme, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
         return crud.create_new_theme(db=db, theme=theme)
+
+
+@app.get("/cal100_methods2")
+async def get_cal():
+    aa = "自然"
+    result = await crud.get_wordcloud(aa)
+    return JSONResponse(content={"async": {"Message": "Get all async..", "output": result}}, status_code=200)
+
+@app.post("/cal100_methods2/{name}")
+async def post_cal(name: str):
+    result = await crud.get_wordcloud(name)
+    
+    return JSONResponse(content={"async": {"Message": "Post all async..", "output": result}}, status_code=200)
+
 
 
 
