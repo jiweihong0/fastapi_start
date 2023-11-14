@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 import models.models as models, schemas.schemas as schemas
 import bcrypt
 from cal.cal100 import my_async_function
+from cal.content import url_20,wiki_result
 import asyncio
 import json
 # get_user_by_username return Uid
@@ -113,3 +114,20 @@ def create_new_theme(db: Session, theme: schemas.Theme):
     db.commit()
     db.refresh(db_theme)
     return db_theme
+
+async def async_url_20(aa):
+    result = await url_20(aa)
+    result.reset_index(inplace=True)
+    distance = result.to_json(orient='records') 
+    ans = json.loads(distance)
+    return {"async": {"Message": "Get all async..", "url": ans}}
+
+async def async_wiki_result(name):
+    result = await url_20(name)
+    result_wiki = await wiki_result(name)
+    result.reset_index(inplace=True)
+    result_rename = result.rename(columns={'title':'url','url':'title','module':'module'})
+    result_rename = result_rename.drop(['index'],axis=1)
+    distance = result_rename.to_json(orient='records')    
+    ans = json.loads(distance)
+    return {"async": {"Message": "Post all async..","wiki_url":"https://zh.wikipedia.org/wiki/"+name, "introduce":result_wiki[0:500],"output":ans}}

@@ -166,7 +166,13 @@ async def post_cal(name: str):
     
     return JSONResponse(content={"async": {"Message": "Post all async..", "output": result}}, status_code=200)
 
+@app.get("/content/{name}")
+async def get_content(name: str):
+    return JSONResponse(content=await crud.async_url_20(name), status_code=200)
 
+@app.post("/content/{name}")
+async def post_content(name: str):
+    return JSONResponse(content=await crud.async_wiki_result(name), status_code=200)
 
 
 
