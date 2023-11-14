@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 import models.models as models, schemas.schemas as schemas
 import bcrypt
 from cal.cal100 import my_async_function
-from cal.content import url_20,wiki_result
+from cal.content import url_20,wiki_result,doc2vec
 import asyncio
 import json
 # get_user_by_username return Uid
@@ -123,7 +123,7 @@ async def async_url_20(aa):
     return {"async": {"Message": "Get all async..", "url": ans}}
 
 async def async_wiki_result(name):
-    result = await url_20(name)
+    result = await doc2vec(name)
     result_wiki = await wiki_result(name)
     result.reset_index(inplace=True)
     result_rename = result.rename(columns={'title':'url','url':'title','module':'module'})
