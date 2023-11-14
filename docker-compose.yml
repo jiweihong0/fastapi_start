@@ -10,7 +10,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=restapi
-      - MYSQL_USER=root
+      - MYSQL_USER=rootfastapi
       - MYSQL_PASSWORD=password
     networks:
       - my-network
@@ -29,7 +29,7 @@ services:
       - mysql
     environment:
       - DB_HOST=mysql
-      - DB_USER=root
+      - DB_USER=rootfastapi
       - DB_PASSWORD=password
       - DB_NAME=restapi
       - DB_URL=mysql+mysqlconnector://root:password@mysql:3306/restapi
