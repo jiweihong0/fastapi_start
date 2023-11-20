@@ -142,7 +142,10 @@ async def classifies(nameprops):
 async def get_news():
     path = os.getcwd()
     # Read global.xlsx
-    df_newurl = pd.read_csv(path + '/cal/url.csv', encoding="big5")
+    df_newurl = pd.read_csv(path + '/cal/url.csv',encoding='utf-8')
+    print(df_newurl)
     # to json by big5
-    return df_newurl.to_json(orient='records', force_ascii=False)
+    json_newurl = df_newurl.to_json(orient='records')
+    ans = json.loads(json_newurl)
+    return ans
 
