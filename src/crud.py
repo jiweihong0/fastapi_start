@@ -5,6 +5,9 @@ from cal.cal100 import my_async_function
 from cal.content import url_20,wiki_result,doc2vec
 import asyncio
 import json
+from cal.classify import classify_func
+import pandas as pd
+import os
 # get_user_by_username return Uid
 def get_user_by_username(db: Session, username: str):
     # return Uid
@@ -131,3 +134,15 @@ async def async_wiki_result(name):
     distance = result_rename.to_json(orient='records')    
     ans = json.loads(distance)
     return {"async": {"Message": "Post all async..","wiki_url":"https://zh.wikipedia.org/wiki/"+name, "introduce":result_wiki[0:500],"output":ans}}
+
+async def classifies(nameprops):
+    result = await classify_func(nameprops)
+    return result
+
+async def get_news():
+    path = os.getcwd()
+    # Read global.xlsx
+    df_newurl = pd.read_csv(path + '/cal/url.csv', encoding="big5")
+    # to json by big5
+    return df_newurl.to_json(orient='records', force_ascii=False)
+

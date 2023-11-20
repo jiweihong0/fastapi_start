@@ -174,6 +174,13 @@ async def get_content(name: str):
 async def post_content(name: str):
     return JSONResponse(content=await crud.async_wiki_result(name), status_code=200)
 
+@app.post("/classifies/{nameprops}")
+async def post_classify(nameprops: str):
+    return JSONResponse(content=await crud.classifies(nameprops), status_code=200)
+
+@app.get("/news")
+async def get_news():
+    return JSONResponse(content=await crud.get_news(), status_code=200)
 
 
 if __name__ == "__main__":
