@@ -129,3 +129,6 @@ class Theme(BaseModel):
     Q4: str
     class Config:
         orm_mode = True
+
+class answer(BaseModel):
+    Question: str

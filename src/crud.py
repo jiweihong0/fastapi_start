@@ -75,7 +75,6 @@ def get_questionnaire_by_username(db: Session, username: str):
             db_questooption = db.query(models.Questiontooption).filter(models.Questiontooption.Qid == j.Qid).all()
             for k in db_questooption:
                 db_option = db.query(models.Options).filter(models.Options.Oid == k.Oid).first()
-                print(db_option.Oid)
                 option.append([db_option.option,db_option.Oid])
                 
             question.append({'Qid':j.Qid,'Question':j.question,'Option':option})
@@ -149,3 +148,7 @@ async def get_news():
     ans = json.loads(json_newurl)
     return ans
 
+def save_answer(db: Session, json_body,username):
+    # json to pd 
+    df = pd.DataFrame(json_body)
+    print(df)

@@ -2,7 +2,7 @@ import uvicorn
 from fastapi.security import OAuth2PasswordBearer
 from jwt import PyJWTError
 from sqlalchemy.orm import Session
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from starlette import status
 import crud
 import models.models as models
@@ -126,6 +126,19 @@ async def create_new_questionnaire(questionnaire: schemas.QuestionnaireBase, cur
 async def get_questionnaire_by_username(current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
         return crud.get_questionnaire_by_username(db=db, username=current_user.username)
+
+@app.post("/post/questionnaire")
+# get post body json data print
+async def get_answer(request: Request, current_user: UserInfo = Depends(get_current_user)
+                            , db: Session = Depends(get_db)):
+    try:
+        json_body = await request.json()
+        crud.save_answer(db=db, json_body=json_body, username=current_user.username)
+        return {"received_json": json_body}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error parsing JSON: {str(e)}")
+
+    
 
 # record questionnaire
 @app.post("/record/questionnaire", response_model=schemas.Record)
