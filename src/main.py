@@ -133,8 +133,7 @@ async def get_answer(request: Request, current_user: UserInfo = Depends(get_curr
                             , db: Session = Depends(get_db)):
     try:
         json_body = await request.json()
-        crud.save_answer(db=db, json_body=json_body, username=current_user.username)
-        return {"received_json": json_body}
+        return crud.save_answer(db=db, json_body=json_body, username=current_user.username)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing JSON: {str(e)}")
 

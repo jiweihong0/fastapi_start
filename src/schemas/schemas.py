@@ -132,3 +132,18 @@ class Theme(BaseModel):
 
 class answer(BaseModel):
     Question: str
+
+class save_answer(BaseModel):
+    Uid: int
+    Qnid: int
+    Qid: int
+    Oid: int
+    class Config:
+        orm_mode = True
+
+class correct(BaseModel):
+    Qnid: int
+    Qid: int
+    Oid: int
+    class Config:
+        orm_mode = True

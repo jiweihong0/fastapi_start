@@ -7,6 +7,7 @@ import asyncio
 import json
 from cal.classify import classify_func
 import pandas as pd
+from fastapi.responses import JSONResponse
 import os
 # get_user_by_username return Uid
 def get_user_by_username(db: Session, username: str):
@@ -151,4 +152,19 @@ async def get_news():
 def save_answer(db: Session, json_body,username):
     # json to pd 
     df = pd.DataFrame(json_body)
-    print(df)
+    db_user_info: models.UserInfo = get_user_by_username(db, username=username)
+    # find Uid db_user_info.Uid in saveqn
+    db_saveqn_user = db.query(models.SaveQn).filter(models.SaveQn.Uid == db_user_info.Uid).all()
+    # find Qnid in saveqn unique
+    db_saveqn_qnid = db.query(models.SaveQn).filter(models.SaveQn.Qnid == int(df.Qnid[0])).all()
+    # db_saveqn_user db_saveqn_qnid not null return error
+    if db_saveqn_user != [] and db_saveqn_qnid != []:
+        message = {"error": {"Message": "User have save this questionnaire"}}
+        return JSONResponse(message, status_code= 400)
+    for i in range(len(df)):
+        db_saveqn = models.SaveQn( Uid = int(db_user_info.Uid),Qnid = int(df.Qnid[0]),Qid = int(df.Question[i]['Qid']), Oid = int(df.Question[i]['Option'][0][1]) )
+        db.add(db_saveqn)
+        db.commit() 
+        db.refresh(db_saveqn)
+    message_success = {"success": {"Message": "Save success"}}
+    return JSONResponse(message_success, status_code= 200)

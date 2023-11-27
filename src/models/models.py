@@ -102,3 +102,18 @@ class Questiontooption(Base):
     id = Column(Integer, primary_key=True, index = True)
     Qid = Column(Integer, ForeignKey('question.Qid'))
     Oid = Column(Integer, ForeignKey('options.Oid'))
+
+class SaveQn(Base):
+    __tablename__ = 'saveqn'
+    id = Column(Integer, primary_key=True, index = True)
+    Uid = Column(Integer, ForeignKey('user_info.Uid'))
+    Qnid = Column(Integer, ForeignKey('questionnaire.Qnid'))
+    Qid = Column(Integer, ForeignKey('question.Qid'))
+    Oid = Column(Integer, ForeignKey('options.Oid'))
+
+class correct(Base):
+    __tablename__ = 'correct'
+    id = Column(Integer, primary_key=True, index = True)
+    Qnid = Column(Integer, ForeignKey('questionnaire.Qnid'))
+    Qid = Column(Integer, ForeignKey('question.Qid'))
+    Oid = Column(Integer, ForeignKey('options.Oid'))
