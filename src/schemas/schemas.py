@@ -118,6 +118,7 @@ class News(BaseModel):
 class WordCloud(BaseModel):
     Uid: int
     Q1: str
+    Q2: str
     class Config:
         orm_mode = True
 
