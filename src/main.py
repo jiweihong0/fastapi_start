@@ -137,6 +137,14 @@ async def get_answer(request: Request, current_user: UserInfo = Depends(get_curr
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing JSON: {str(e)}")
 
+@app.get("/transcript")
+async def get_transcript(request: Request,current_user: UserInfo = Depends(get_current_user)
+                            , db: Session = Depends(get_db)):
+        try:
+            json_body = await request.json()
+            return crud.correct(db=db, json_body=json_body, username=current_user.username)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Error parsing JSON: {str(e)}")
     
 
 # record questionnaire

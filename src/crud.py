@@ -151,20 +151,71 @@ async def get_news():
 
 def save_answer(db: Session, json_body,username):
     # json to pd 
-    df = pd.DataFrame(json_body)
+    df = pd.DataFrame(json_body['Question'])
     db_user_info: models.UserInfo = get_user_by_username(db, username=username)
     # find Uid db_user_info.Uid in saveqn
     db_saveqn_user = db.query(models.SaveQn).filter(models.SaveQn.Uid == db_user_info.Uid).all()
     # find Qnid in saveqn unique
-    db_saveqn_qnid = db.query(models.SaveQn).filter(models.SaveQn.Qnid == int(df.Qnid[0])).all()
+    db_saveqn_qnid = db.query(models.SaveQn).filter(models.SaveQn.Qnid == int(json_body["Qnid"])).all()
     # db_saveqn_user db_saveqn_qnid not null return error
     if db_saveqn_user != [] and db_saveqn_qnid != []:
         message = {"error": {"Message": "User have save this questionnaire"}}
         return JSONResponse(message, status_code= 400)
     for i in range(len(df)):
-        db_saveqn = models.SaveQn( Uid = int(db_user_info.Uid),Qnid = int(df.Qnid[0]),Qid = int(df.Question[i]['Qid']), Oid = int(df.Question[i]['Option'][0][1]) )
+        # Qid Oid
+        Qid = int(df.iloc[i]['Qid'])
+        Oid = int(df.iloc[i]['Option'][0][1])
+        db_saveqn = models.SaveQn( Uid = int(db_user_info.Uid),Qnid = int(json_body["Qnid"]),Qid = Qid, Oid = Oid)
         db.add(db_saveqn)
         db.commit() 
         db.refresh(db_saveqn)
-    message_success = {"success": {"Message": "Save success"}}
+    # read correct from db
+    db_correct = db.query(models.correct).filter(models.correct.Qnid == int(json_body["Qnid"])).all()
+    # correct to json
+    correct = []
+    # df oid = df option[0][1]
+    df['Oid'] = df['Option'].apply(lambda x: x[0][1])
+    for i in db_correct:
+        correct.append({'Qid':i.Qid,'Oid':i.Oid})
+    # correct to pd
+    df_correct = pd.DataFrame(correct)
+    # 答對哪幾題
+    df_correct = pd.merge(df,df_correct,how='inner',on=['Qid','Oid'])
+    # 答對幾題
+    correct_count = len(df_correct)
+    # 答對哪幾題
+    correct = df_correct['Qid'].tolist()
+    # 答對率
+    correct_rate = correct_count/len(df)
+
+    message_success = {"success": {"Message": "Save success", "correct_count": correct_count, "correct": correct, "correct_rate": correct_rate}}
+    return JSONResponse(message_success, status_code= 200)
+
+def correct (db: Session,json_body, username):
+    db_user_info: models.UserInfo = get_user_by_username(db, username=username)
+    # find Uid db_user_info.Uid in saveqn
+    df_data = db.query(models.SaveQn).filter(models.SaveQn.Uid == db_user_info.Uid).all()
+    # get correct answer
+    db_correct = db.query(models.correct).filter(models.correct.Qnid == int(json_body["Qnid"])).all()
+    # compare correct answer and user answer
+    correct = []
+    for i in db_correct:
+        correct.append({'Qid':i.Qid,'Oid':i.Oid})
+    # correct to pd
+    df_correct = pd.DataFrame(correct)
+    # user answer
+    user_answer = []
+    for i in df_data:
+        user_answer.append({'Qid':i.Qid,'Oid':i.Oid})
+    # user answer to pd
+    df_user_answer = pd.DataFrame(user_answer)
+    # 答對哪幾題
+    df_correct = pd.merge(df_user_answer,df_correct,how='inner',on=['Qid','Oid'])
+    # 答對幾題
+    correct_count = len(df_correct)
+    # 答對哪幾題
+    correct = df_correct['Qid'].tolist()
+    # 答對率
+    correct_rate = correct_count/len(df_data)
+    message_success = {"success": {"Message": "Save success", "correct_count": correct_count, "correct": correct, "correct_rate": correct_rate}}
     return JSONResponse(message_success, status_code= 200)
