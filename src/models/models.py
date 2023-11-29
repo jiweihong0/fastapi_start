@@ -88,6 +88,8 @@ class WordCloud(Base):
     Uid = Column(Integer, ForeignKey('user_info.Uid'))
     Q1 = Column(String(500))
     Q2 = Column(String(500))
+    Q3 = Column(String(500))
+    Q4 = Column(String(500))
 
 class Theme(Base):
     __tablename__ = 'theme'

@@ -119,6 +119,8 @@ class WordCloud(BaseModel):
     Uid: int
     Q1: str
     Q2: str
+    Q3: str
+    Q4: str
     class Config:
         orm_mode = True
 

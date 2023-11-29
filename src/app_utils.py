@@ -25,4 +25,3 @@ def decode_access_token(*, data: str):
     to_decode = data
     return jwt.decode(to_decode, secret_key, algorithms=[algorithm])
 
-
