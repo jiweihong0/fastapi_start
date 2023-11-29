@@ -1,9 +1,10 @@
 from pydantic import BaseModel 
 
 class UserInfoBase(BaseModel):
-    username : str 
+    email : str 
 
 class UserCreate(UserInfoBase):
+    username: str
     age: int
     email: str
     department: str
@@ -31,7 +32,7 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str = None
+    email: str = None
 
 
 

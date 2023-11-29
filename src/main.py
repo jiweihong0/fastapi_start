@@ -8,7 +8,7 @@ import crud
 import models.models as models
 import schemas.schemas as schemas
 from app_utils import decode_access_token
-from crud import get_user_by_username
+from crud import get_user_by_email
 from database import engine, SessionLocal
 from schemas.schemas import UserInfo, TokenData, UserCreate, Token, UserAuthenticate
 from fastapi.middleware.cors import CORSMiddleware
@@ -62,13 +62,13 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
     )
     try:
         payload = decode_access_token(data=token)
-        username: str = payload.get("sub")
-        if username is None:
+        email: str = payload.get("sub")
+        if email is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
+        token_data = TokenData(email=email)
     except PyJWTError:
         raise credentials_exception
-    user = get_user_by_username(db, username=token_data.username)
+    user = get_user_by_email(db, email=token_data.email)
     if user is None:
         raise credentials_exception
     return user
@@ -76,27 +76,27 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 
 @app.post("/user", response_model=UserInfo)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_username(db, username=user.username)
+    db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
+        raise HTTPException(status_code=400, detail="email already registered")
     return crud.create_user(db=db, user=user)
 
 
 @app.post("/authenticate", response_model=Token)
 def authenticate_user(user: schemas.UserAuthenticate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_username(db, username=user.username)
+    db_user = crud.get_user_by_email(db, email=user.email)
     print(db_user.type)
     
     if db_user is None:
-        raise HTTPException(status_code=400, detail="Username not existed")
+        raise HTTPException(status_code=400, detail="email not existed")
     else:
-        is_password_correct = crud.check_username_password(db, user)
+        is_password_correct = crud.check_email_password(db, user)
         if is_password_correct is False:
             raise HTTPException(status_code=400, detail="Password is not correct")
         else:
             access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
             access_token = create_access_token(
-                data={"sub": user.username}, expires_delta=access_token_expires)
+                data={"sub": user.email}, expires_delta=access_token_expires)
             return {"access_token": access_token, "token_type": "Bearer", "type": db_user.type, "auth": db_user.auth}
 
 
@@ -109,11 +109,11 @@ async def get_wordcloud(word,current_user: UserInfo = Depends(get_current_user)
 
 @app.post("/user/change_password")
 def change_password(user: UserAuthenticate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_username(db, username=user.username)
+    db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         return crud.change_password(db=db, user=user)
     else:
-        raise HTTPException(status_code=400, detail="Username not existed")
+        raise HTTPException(status_code=400, detail="email not existed")
     
 # do questionnaire
 @app.post("/questionnaire", response_model=schemas.Questionnaire)
@@ -121,11 +121,11 @@ async def create_new_questionnaire(questionnaire: schemas.QuestionnaireBase, cur
                             , db: Session = Depends(get_db)):
         return crud.create_new_questionnaire(db=db, questionnaire=questionnaire)
 
-# get questionnaire by decode token username
+# get questionnaire by decode token email
 @app.get("/get/questionnaire")
-async def get_questionnaire_by_username(current_user: UserInfo = Depends(get_current_user)
+async def get_questionnaire_by_email(current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.get_questionnaire_by_username(db=db, username=current_user.username)
+        return crud.get_questionnaire_by_email(db=db, email=current_user.email)
 
 @app.post("/post/questionnaire")
 # get post body json data print
@@ -133,7 +133,7 @@ async def get_answer(request: Request, current_user: UserInfo = Depends(get_curr
                             , db: Session = Depends(get_db)):
     try:
         json_body = await request.json()
-        return crud.save_answer(db=db, json_body=json_body, username=current_user.username)
+        return crud.save_answer(db=db, json_body=json_body, email=current_user.email)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing JSON: {str(e)}")
 
@@ -142,7 +142,7 @@ async def get_transcript(request: Request,current_user: UserInfo = Depends(get_c
                             , db: Session = Depends(get_db)):
         try:
             json_body = await request.json()
-            return crud.correct(db=db, json_body=json_body, username=current_user.username)
+            return crud.correct(db=db, json_body=json_body, email=current_user.email)
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Error parsing JSON: {str(e)}")
     
@@ -156,22 +156,22 @@ async def record_questionnaire(record: schemas.Record, current_user: UserInfo = 
 @app.post("/new/trailer", response_model=schemas.Tralier)
 async def create_new_trailer(trailer: schemas.Tralier, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_trailer(db=db, trailer=trailer, username = current_user.username)
+        return crud.create_new_trailer(db=db, trailer=trailer, email = current_user.email)
 
 @app.post("/new/news", response_model=schemas.News)
 async def create_new_news(news: schemas.News, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_news(db=db, news=news, username = current_user.username)
+        return crud.create_new_news(db=db, news=news, email = current_user.email)
 
 @app.post("/new/wordcloud", response_model=schemas.WordCloud)
 async def create_new_wordcloud(wordcloud: schemas.WordCloud, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_wordcloud(db=db, wordcloud=wordcloud, username = current_user.username)
+        return crud.create_new_wordcloud(db=db, wordcloud=wordcloud, email = current_user.email)
 
 @app.post("/new/theme", response_model=schemas.Theme)
 async def create_new_theme(theme: schemas.Theme, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_theme(db=db, theme=theme, username = current_user.username)
+        return crud.create_new_theme(db=db, theme=theme, email = current_user.email)
 
 
 @app.get("/cal100_methods2")
