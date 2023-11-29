@@ -105,7 +105,7 @@ def create_new_news(db: Session, news: schemas.News):
     return db_news
 
 def create_new_wordcloud(db: Session, wordcloud: schemas.WordCloud):
-    db_wordcloud = models.WordCloud(Uid = wordcloud.Uid, Q1 = wordcloud.Q1)
+    db_wordcloud = models.WordCloud(Uid = wordcloud.Uid, Q1 = wordcloud.Q1, Q2 = wordcloud.Q2, Q3 = wordcloud.Q3, Q4 = wordcloud.Q4)
     db.add(db_wordcloud)
     db.commit()
     db.refresh(db_wordcloud)
