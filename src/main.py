@@ -156,22 +156,22 @@ async def record_questionnaire(record: schemas.Record, current_user: UserInfo = 
 @app.post("/new/trailer", response_model=schemas.Tralier)
 async def create_new_trailer(trailer: schemas.Tralier, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_trailer(db=db, trailer=trailer)
+        return crud.create_new_trailer(db=db, trailer=trailer, username = current_user.username)
 
 @app.post("/new/news", response_model=schemas.News)
 async def create_new_news(news: schemas.News, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_news(db=db, news=news)
+        return crud.create_new_news(db=db, news=news, username = current_user.username)
 
 @app.post("/new/wordcloud", response_model=schemas.WordCloud)
 async def create_new_wordcloud(wordcloud: schemas.WordCloud, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_wordcloud(db=db, wordcloud=wordcloud)
+        return crud.create_new_wordcloud(db=db, wordcloud=wordcloud, username = current_user.username)
 
 @app.post("/new/theme", response_model=schemas.Theme)
 async def create_new_theme(theme: schemas.Theme, current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.create_new_theme(db=db, theme=theme)
+        return crud.create_new_theme(db=db, theme=theme, username = current_user.username)
 
 
 @app.get("/cal100_methods2")

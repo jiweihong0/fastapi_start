@@ -9,6 +9,7 @@ from cal.classify import classify_func
 import pandas as pd
 from fastapi.responses import JSONResponse
 import os
+import random
 # get_user_by_username return Uid
 def get_user_by_username(db: Session, username: str):
     # return Uid
@@ -20,6 +21,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    # create questionnaire_to_user Qnid = 1 Qnid = 2
+    db_questionnaire_to_user = models.QuestionnaireToUser(Qnid = 1, Uid = db_user.Uid)
+    db.add(db_questionnaire_to_user)
+    db.commit()
+    db.refresh(db_questionnaire_to_user)
+    db_questionnaire_to_user = models.QuestionnaireToUser(Qnid = 2, Uid = db_user.Uid)
+    db.add(db_questionnaire_to_user)
+    db.commit()
+    db.refresh(db_questionnaire_to_user)
     return db_user
 
 def check_username_password(db: Session, user: schemas.UserAuthenticate):
@@ -77,6 +87,8 @@ def get_questionnaire_by_username(db: Session, username: str):
             for k in db_questooption:
                 db_option = db.query(models.Options).filter(models.Options.Oid == k.Oid).first()
                 option.append([db_option.option,db_option.Oid])
+            # option random
+            random.shuffle(option)
                 
             question.append({'Qid':j.Qid,'Question':j.question,'Option':option})
         ans.append({'Qnid':db_questionnaire.Qnid,'title':db_questionnaire.title,'content':db_questionnaire.content,'Question':question})
@@ -90,29 +102,34 @@ def record_questionnaire(db: Session, record: schemas.Record):
     db.refresh(db_record)
     return db_record
 
-def create_new_trailer(db: Session, trailer: schemas.Tralier):
-    db_trailer = models.Trailer(Uid = trailer.Uid, Q1 = trailer.Q1, Q2 = trailer.Q2, Q3 = trailer.Q3, Q4 = trailer.Q4, Q5 = trailer.Q5, Q6 = trailer.Q6)
+def create_new_trailer(db: Session, trailer: schemas.Tralier, username):
+    user_id = db.query(models.UserInfo).filter(models.UserInfo.username == username).first()
+    db_trailer = models.Trailer(Uid = user_id.Uid, Q1 = trailer.Q1, Q2 = trailer.Q2, Q3 = trailer.Q3, Q4 = trailer.Q4, Q5 = trailer.Q5, Q6 = trailer.Q6)
     db.add(db_trailer)
     db.commit()
     db.refresh(db_trailer)
     return db_trailer
 
-def create_new_news(db: Session, news: schemas.News):
-    db_news = models.News(Uid = news.Uid, Q1 = news.Q1, Q2 = news.Q2, Q3 = news.Q3, Q4 = news.Q4)
+def create_new_news(db: Session, news: schemas.News, username):
+    user_id = db.query(models.UserInfo).filter(models.UserInfo.username == username).first()
+    db_news = models.News(Uid = user_id.Uid, Q1 = news.Q1, Q2 = news.Q2, Q3 = news.Q3, Q4 = news.Q4)
     db.add(db_news)
     db.commit()
     db.refresh(db_news)
     return db_news
 
-def create_new_wordcloud(db: Session, wordcloud: schemas.WordCloud):
-    db_wordcloud = models.WordCloud(Uid = wordcloud.Uid, Q1 = wordcloud.Q1, Q2 = wordcloud.Q2, Q3 = wordcloud.Q3, Q4 = wordcloud.Q4)
+def create_new_wordcloud(db: Session, wordcloud, username):
+    user_id = db.query(models.UserInfo).filter(models.UserInfo.username == username).first()
+
+    db_wordcloud = models.WordCloud(Uid = user_id.Uid, Q1 = wordcloud.Q1, Q2 = wordcloud.Q2, Q3 = wordcloud.Q3, Q4 = wordcloud.Q4)
     db.add(db_wordcloud)
     db.commit()
     db.refresh(db_wordcloud)
     return db_wordcloud
 
-def create_new_theme(db: Session, theme: schemas.Theme):
-    db_theme = models.Theme(Uid = theme.Uid, Q1 = theme.Q1, Q2 = theme.Q2, Q3 = theme.Q3, Q4 = theme.Q4)
+def create_new_theme(db: Session, theme: schemas.Theme, username):
+    user_id = db.query(models.UserInfo).filter(models.UserInfo.username == username).first()
+    db_theme = models.Theme(Uid = user_id.Uid, Q1 = theme.Q1, Q2 = theme.Q2, Q3 = theme.Q3, Q4 = theme.Q4)
     db.add(db_theme)
     db.commit()
     db.refresh(db_theme)
