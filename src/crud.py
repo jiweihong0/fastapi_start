@@ -104,36 +104,59 @@ def record_questionnaire(db: Session, record: schemas.Record):
 
 def create_new_trailer(db: Session, trailer: schemas.Tralier, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
+    # find Uid in trailer > 0 return error
+    db_trailer = db.query(models.Tralier).filter(models.Tralier.Uid == user_id.Uid).all()
+    if db_trailer != []:
+        message = {"error": {"Message": "User have save this questionnaire"}}
+        return JSONResponse(message, status_code= 400)
     db_trailer = models.Trailer(Uid = user_id.Uid, Q1 = trailer.Q1, Q2 = trailer.Q2, Q3 = trailer.Q3, Q4 = trailer.Q4, Q5 = trailer.Q5, Q6 = trailer.Q6)
     db.add(db_trailer)
     db.commit()
     db.refresh(db_trailer)
-    return db_trailer
+    message_success = {"success":{"Message": "Save success"}}
+    return JSONResponse(message_success, status_code= 200)
 
 def create_new_news(db: Session, news: schemas.News, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
+    # find Uid in  news > 0 return error
+    db_news = db.query(models.News).filter(models.News.Uid == user_id.Uid).all()
+    if db_news != []:
+        message = {"error": {"Message": "User have save this questionnaire"}}
+        return JSONResponse(message, status_code= 400)
     db_news = models.News(Uid = user_id.Uid, Q1 = news.Q1, Q2 = news.Q2, Q3 = news.Q3, Q4 = news.Q4)
     db.add(db_news)
     db.commit()
     db.refresh(db_news)
-    return db_news
+    message_success = {"success":{"Message": "Save success"}}
+    return JSONResponse(message_success, status_code= 200)
 
 def create_new_wordcloud(db: Session, wordcloud, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
-
+    # find Uid in  wordcloud > 0 return error
+    db_wordcloud = db.query(models.WordCloud).filter(models.WordCloud.Uid == user_id.Uid).all()
+    if db_wordcloud != []:
+        message = {"error": {"Message": "User have save this questionnaire"}}
+        return JSONResponse(message, status_code= 400)
     db_wordcloud = models.WordCloud(Uid = user_id.Uid, Q1 = wordcloud.Q1, Q2 = wordcloud.Q2, Q3 = wordcloud.Q3, Q4 = wordcloud.Q4)
     db.add(db_wordcloud)
     db.commit()
     db.refresh(db_wordcloud)
-    return db_wordcloud
+    message_success = {"success":{"Message": "Save success"}}
+    return JSONResponse(message_success, status_code= 200)
 
 def create_new_theme(db: Session, theme: schemas.Theme, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
+    # find Uid in  theme > 0 return error
+    db_theme = db.query(models.Theme).filter(models.Theme.Uid == user_id.Uid).all()
+    if db_theme != []:
+        message = {"error": {"Message": "User have save this questionnaire"}}
+        return JSONResponse(message, status_code= 400)
     db_theme = models.Theme(Uid = user_id.Uid, Q1 = theme.Q1, Q2 = theme.Q2, Q3 = theme.Q3, Q4 = theme.Q4)
     db.add(db_theme)
     db.commit()
     db.refresh(db_theme)
-    return db_theme
+    message_success = {"success":{"Message": "Save success"}}
+    return JSONResponse(message_success, status_code= 200)
 
 async def async_url_20(aa):
     result = await url_20(aa)
