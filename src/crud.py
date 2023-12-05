@@ -71,27 +71,28 @@ def get_questionnaire_by_userid(db: Session, userid: int):
     return db.query(models.Questionnaire).filter(models.Questionnaire.userid == userid).all()
 
 # get_questionnaire_by_email
-def get_questionnaire_by_email(db: Session, email: str):
-    db_user_info: models.UserInfo = get_user_by_email(db, email=email)
-    db_data = db.query(models.QuestionnaireToUser).filter(models.QuestionnaireToUser.Uid == db_user_info.Uid).all()
+def get_questionnaire_by_email(db: Session, email: str, Qnid:str):
+    # db_user_info: models.UserInfo = get_user_by_email(db, email=email)
+    # db_data = db.query(models.QuestionnaireToUser).filter(models.QuestionnaireToUser.Uid == db_user_info.Uid).all()
+   
     # 用Qnid 去找 全部的Question 再用找到的 Qid 去找全部的 option
     ans = []
-    for i in db_data:
-        db_questionnaire = db.query(models.Questionnaire).filter(models.Questionnaire.Qnid == i.Qnid).first()
-        db_question = db.query(models.Question).filter(models.Question.Qnid == db_questionnaire.Qnid).all()
-        # Question and option  to json
-        question = []
-        for j in db_question:
-            option = []
-            db_questooption = db.query(models.Questiontooption).filter(models.Questiontooption.Qid == j.Qid).all()
-            for k in db_questooption:
-                db_option = db.query(models.Options).filter(models.Options.Oid == k.Oid).first()
-                option.append([db_option.option,db_option.Oid])
-            # option random
-            random.shuffle(option)
-                
-            question.append({'Qid':j.Qid,'Question':j.question,'Option':option})
-        ans.append({'Qnid':db_questionnaire.Qnid,'title':db_questionnaire.title,'content':db_questionnaire.content,'Question':question})
+ 
+    db_questionnaire = db.query(models.Questionnaire).filter(models.Questionnaire.Qnid == Qnid).first()
+    db_question = db.query(models.Question).filter(models.Question.Qnid == db_questionnaire.Qnid).all()
+    # Question and option  to json
+    question = []
+    for j in db_question:
+        option = []
+        db_questooption = db.query(models.Questiontooption).filter(models.Questiontooption.Qid == j.Qid).all()
+        for k in db_questooption:
+            db_option = db.query(models.Options).filter(models.Options.Oid == k.Oid).first()
+            option.append([db_option.option,db_option.Oid])
+        # option random
+        random.shuffle(option)
+            
+        question.append({'Qid':j.Qid,'Question':j.question,'Option':option})
+    ans.append({'Qnid':db_questionnaire.Qnid,'title':db_questionnaire.title,'content':db_questionnaire.content,'Question':question})
     return ans
 
 #record_questionnaire

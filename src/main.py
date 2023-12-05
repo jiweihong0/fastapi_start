@@ -123,9 +123,10 @@ async def create_new_questionnaire(questionnaire: schemas.QuestionnaireBase, cur
 
 # get questionnaire by decode token email
 @app.get("/get/questionnaire")
-async def get_questionnaire_by_email(current_user: UserInfo = Depends(get_current_user)
+async def get_questionnaire_by_email(Qnid:str,current_user: UserInfo = Depends(get_current_user)
                             , db: Session = Depends(get_db)):
-        return crud.get_questionnaire_by_email(db=db, email=current_user.email)
+        
+        return crud.get_questionnaire_by_email(db=db, email=current_user.email, Qnid=Qnid)
 
 @app.post("/post/questionnaire")
 # get post body json data print
