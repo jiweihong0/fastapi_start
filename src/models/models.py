@@ -25,6 +25,8 @@ class Question(Base):
     Qid = Column(Integer, primary_key=True, index = True)
     question = Column(String(100))
     Qnid = Column(Integer, ForeignKey('questionnaire.Qnid'))
+    
+
     # fullname = Column(String(50), unique=True)
 
 class Options(Base):

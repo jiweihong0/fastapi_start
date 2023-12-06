@@ -93,8 +93,11 @@ def get_questionnaire_by_email(db: Session, email: str, Qnid:str):
         for k in db_questooption:
             db_option = db.query(models.Options).filter(models.Options.Oid == k.Oid).first()
             option.append([db_option.option,db_option.Oid])
-        # option random
-        random.shuffle(option)
+        # if Qnid == 3 dont random option else random option
+        if Qnid == '3':
+            option = option
+        else:
+            option = random.sample(option, len(option))
             
         question.append({'Qid':j.Qid,'Question':j.question,'Option':option})
     ans.append({'Qnid':db_questionnaire.Qnid,'title':db_questionnaire.title,'content':db_questionnaire.content,'Question':question})
