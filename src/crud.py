@@ -72,8 +72,13 @@ def get_questionnaire_by_userid(db: Session, userid: int):
 
 # get_questionnaire_by_email
 def get_questionnaire_by_email(db: Session, email: str, Qnid:str):
-    # db_user_info: models.UserInfo = get_user_by_email(db, email=email)
-    # db_data = db.query(models.QuestionnaireToUser).filter(models.QuestionnaireToUser.Uid == db_user_info.Uid).all()
+    # email to Uid
+    db_user_info: models.UserInfo = get_user_by_email(db, email=email)
+    # Use Uid and Qnid to find SaveQn if not null return error
+    db_saveqn = db.query(models.SaveQn).filter(models.SaveQn.Uid == db_user_info.Uid).filter(models.SaveQn.Qnid == Qnid).all()
+    if db_saveqn != []:
+        message = {"error": {"Message": "User have save this questionnaire"}}
+        return JSONResponse(message, status_code= 400)
    
     # 用Qnid 去找 全部的Question 再用找到的 Qid 去找全部的 option
     ans = []
