@@ -200,11 +200,10 @@ def save_answer(db: Session, json_body,email):
     df = pd.DataFrame(json_body['Question'])
     db_user_info: models.UserInfo = get_user_by_email(db, email=email)
     # find Uid db_user_info.Uid in saveqn
-    db_saveqn_user = db.query(models.SaveQn).filter(models.SaveQn.Uid == db_user_info.Uid).all()
-    # find Qnid in saveqn unique
-    db_saveqn_qnid = db.query(models.SaveQn).filter(models.SaveQn.Qnid == int(json_body["Qnid"])).all()
+    db_saveqn_user = db.query(models.SaveQn).filter(models.SaveQn.Uid == db_user_info.Uid).filter(models.SaveQn.Qnid == int(json_body["Qnid"])).all()
+
     # db_saveqn_user db_saveqn_qnid not null return error
-    if db_saveqn_user != [] and db_saveqn_qnid != []:
+    if db_saveqn_user != [] :
         message = {"error": {"Message": "User have save this questionnaire"}}
         return JSONResponse(message, status_code= 400)
     for i in range(len(df)):
