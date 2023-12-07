@@ -97,7 +97,6 @@ class Record(BaseModel):
         orm_mode = True
 
 class Tralier(BaseModel):
-    Uid: int
     Q1: str
     Q2: str
     Q3: str
@@ -108,7 +107,7 @@ class Tralier(BaseModel):
         orm_mode = True
 
 class News(BaseModel):
-    Uid: int
+
     Q1: str
     Q2: str
     Q3: str
@@ -125,7 +124,7 @@ class WordCloud(BaseModel):
         orm_mode = True
 
 class Theme(BaseModel):
-    Uid: int
+
     Q1: str
     Q2: str
     Q3: str

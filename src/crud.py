@@ -111,10 +111,10 @@ def record_questionnaire(db: Session, record: schemas.Record):
     db.refresh(db_record)
     return db_record
 
-def create_new_trailer(db: Session, trailer: schemas.Tralier, email):
+def create_new_trailer(db: Session, trailer, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
     # find Uid in trailer > 0 return error
-    db_trailer = db.query(models.Tralier).filter(models.Tralier.Uid == user_id.Uid).all()
+    db_trailer = db.query(models.Trailer).filter(models.Trailer.Uid== user_id.Uid).all()
     if db_trailer != []:
         message = {"error": {"Message": "User have save this questionnaire"}}
         return JSONResponse(message, status_code= 400)
@@ -125,7 +125,7 @@ def create_new_trailer(db: Session, trailer: schemas.Tralier, email):
     message_success = {"success":{"Message": "Save success"}}
     return JSONResponse(message_success, status_code= 200)
 
-def create_new_news(db: Session, news: schemas.News, email):
+def create_new_news(db: Session, news, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
     # find Uid in  news > 0 return error
     db_news = db.query(models.News).filter(models.News.Uid == user_id.Uid).all()
@@ -153,7 +153,7 @@ def create_new_wordcloud(db: Session, wordcloud, email):
     message_success = {"success":{"Message": "Save success"}}
     return JSONResponse(message_success, status_code= 200)
 
-def create_new_theme(db: Session, theme: schemas.Theme, email):
+def create_new_theme(db: Session, theme, email):
     user_id = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
     # find Uid in  theme > 0 return error
     db_theme = db.query(models.Theme).filter(models.Theme.Uid == user_id.Uid).all()
