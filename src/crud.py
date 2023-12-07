@@ -219,6 +219,26 @@ def save_answer(db: Session, json_body,email):
         db.refresh(db_saveqn)
     print(json_body["Qnid"])
     if int(json_body["Qnid"]) == 3:
+    #     # read df Qid 87-134  learning_style
+    #     learning_style = df[df['Qid'].between(87, 134)]
+    #     # read Qid 135-194 others
+    #     others = df[df['Qid'].between(135, 194)]
+    #    # learning_style Qid 87-134 option index 144-147 to point 1-4 to array
+    #     learning_style = learning_style['Option'].tolist()
+    #     learning_style = [i[0][1] for i in learning_style]
+
+    #     # learning_style 144 = 1, 145 = 2, 146 = 3, 147 = 4
+    #     score_learning_style = sum({144: 1, 145: 2, 146: 3, 147: 4}.get(i, 0) for i in learning_style)
+
+    #     # others Qid 135-194 option index 144-147 to point 1-5 to array
+    #     others = others['Option'].tolist()
+    #     others = [i[0][1] for i in others]
+  
+    #     # Map others to scores and update the total score
+    #     score_others = sum({148: 1, 149: 2, 150: 3, 151: 4, 152: 5}.get(i, 0) for i in others)
+       
+    #     # score
+    #     score = score_learning_style + score_others
         message_success = {"success":{"Message": "Save success"}}
         return JSONResponse(message_success, status_code= 200)
     # read correct from db
