@@ -1,5 +1,5 @@
 from enum import unique
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, Boolean
 from database import Base 
 
 class UserInfo(Base):
@@ -122,3 +122,12 @@ class correct(Base):
     Qnid = Column(Integer, ForeignKey('questionnaire.Qnid'))
     Qid = Column(Integer, ForeignKey('question.Qid'))
     Oid = Column(Integer, ForeignKey('options.Oid'))
+
+class qntype(Base):
+    __tablename__ = 'qtype'
+    id = Column(Integer, primary_key=True, index = True)
+    Qid = Column(Integer, ForeignKey('question.Qid'))
+    type = Column(String(50))
+    class_name = Column(String(50),nullable=True)
+    reversed = Column(Boolean,unique=False,default=False)
+  
