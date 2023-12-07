@@ -283,7 +283,7 @@ CREATE TABLE `qtype` (
   `type` varchar(50) DEFAULT NULL,
   `class_name` varchar(50) DEFAULT NULL,
   `reversed` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `qtype`
