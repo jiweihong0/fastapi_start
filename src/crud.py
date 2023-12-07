@@ -217,6 +217,10 @@ def save_answer(db: Session, json_body,email):
         db.add(db_saveqn)
         db.commit() 
         db.refresh(db_saveqn)
+    print(json_body["Qnid"])
+    if int(json_body["Qnid"]) == 3:
+        message_success = {"success":{"Message": "Save success"}}
+        return JSONResponse(message_success, status_code= 200)
     # read correct from db
     db_correct = db.query(models.correct).filter(models.correct.Qnid == int(json_body["Qnid"])).all()
     # correct to json
