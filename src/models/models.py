@@ -6,7 +6,7 @@ class UserInfo(Base):
     __tablename__ = 'user_info'
 
     Uid = Column(Integer, primary_key=True, index = True)
-    age = Column(Integer)
+    depid = Column(String(50))
     email = Column(String(50), unique=True)
     department = Column(String(50))
     username = Column(String(50))

@@ -5,10 +5,10 @@ class UserInfoBase(BaseModel):
 
 class UserCreate(UserInfoBase):
     username: str
-    age: int
+    depid: str
     email: str
     department: str
-    password: str
+    password: str  
     type: str
 
 
