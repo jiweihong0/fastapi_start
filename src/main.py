@@ -19,7 +19,7 @@ import json
 
 models.Base.metadata.create_all(bind=engine)
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 10
+ACCESS_TOKEN_EXPIRE_MINUTES = 3600
 
 app = FastAPI(debug=True)
 

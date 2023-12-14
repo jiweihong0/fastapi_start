@@ -17,7 +17,7 @@ def get_user_by_email(db: Session, email: str):
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
-    db_user = models.UserInfo(username=user.username, password=hashed_password, age=user.age, email=user.email, department=user.department,type=user.type)
+    db_user = models.UserInfo(username=user.username, password=hashed_password, depid=user.depid, email=user.email, department=user.department,type=user.type)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
